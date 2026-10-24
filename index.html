@@ -224,6 +224,13 @@
     <span>📖 مقدمات روش های تحقیق کمی وکیفی</span>
     <span>◀</span>
     </a> 
-
-</body>
+<script>
+    document.querySelectorAll('.course-item').forEach(item => {
+        item.addEventListener('click', function(e) {
+            const courseName = this.querySelector('span').innerText.replace('📖', '').trim();
+            this.href = 'course.html?name=' + encodeURIComponent(courseName);
+        });
+    });
+        </script>
+</body> 
   </html>
