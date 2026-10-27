@@ -88,8 +88,30 @@
 <script>
     const urlParams = new URLSearchParams(window.location.search);
     const courseName = urlParams.get('name');
+    
     if (courseName) {
         document.getElementById('course-name').innerText = courseName;
+        
+        // پیدا کردن دکمه‌های صفحه
+        const buttons = document.querySelectorAll('.file-card');
+        
+        // لیست کتاب‌هایی که فایل PDF دارن (هر کتابی که آپلود کردی رو اینجا اضافه کن)
+        const bookFiles = {
+            'منطق': 'book-manteq.pdf',
+            'روانشناسی تربیتی': 'book-ravanshenasi-tarbiati.pdf',
+            'آمار توصیفی': 'book-amar-tosifi.pdf',
+            'مدیریت عمومی': 'book-modiriat-omomi.pdf',
+            'آمار استنباطی': 'book-amar-estenbati.pdf'
+        };
+
+        // اگر کتابی که کلیک شده، توی لیست بالا بود، فایلش رو به دکمه سوم (کتاب کامل) وصل کن
+        if (bookFiles[courseName]) {
+            const fileName = bookFiles[courseName];
+            
+            if(buttons[2]) {
+                buttons[2].href = 'pdfs/' + fileName;
+            }
+        }
     }
 </script>
 </body>
