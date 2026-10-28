@@ -88,7 +88,6 @@
 <script>
     function cleanText(text) {
         if (!text) return "";
-        // این تابع فاصله‌ها، نیم‌فاصله‌ها، خط تیره و حروف عربی رو یکسان میکنه
         return text
             .replace(/ي/g, 'ی')
             .replace(/ك/g, 'ک')
@@ -103,7 +102,6 @@
         
         const buttons = document.querySelectorAll('.file-card');
         
-        // لیست کامل کتاب‌ها
         const bookFiles = {
             'منطق': 'pdfs/book-manteq.pdf',
             'روانشناسی تربیتی': 'pdfs/book-ravanshenasi-tarbiati.pdf',
@@ -115,13 +113,10 @@
             'روانشناسی اجتماعی': 'pdfs/book-ravanshenasi-ejtemaei.pdf',
             'طراحی آموزشی': 'pdfs/book-tarrahi-amouzeshi.pdf',
             'آموزش هنر': 'pdfs/book-amouzesh-honar.pdf',
-            'آموزش و پرورش پیش دبستانی در ایران': 'pdfs/book-amouzesh-parvaresh-pish-dabestani.pdf',
-            'آموزش و پرورش تطبیقی': 'pdfs/book-amouzesh-parvaresh-tatbighi.pdf',
             'آموزش تفکر به کودکان و نوجوانان': 'pdfs/book-amouzesh-tafakor-koodakan.pdf',
             'آرای تربیتی اندیشمندان مسلمان': 'pdfs/book-ara-tarbiati-andishmandan-mosalaman.pdf',
             'ارزشیابی آموزشی': 'pdfs/book-arzeshyabi-amouzeshi.pdf',
             'بهداشت و تغذیه مادر و کودک': 'pdfs/book-behdasht-taghziye-madar-koodak.pdf',
-            'اختلال رفتاری و هیجانی': 'pdfs/book-ekhtelal-raftari-va-hayajani.pdf',
             'ارتباط انسانی': 'pdfs/book-ertebat-ensani.pdf',
             'قصه گویی و نمایش خلاق': 'pdfs/book-gheseh-gooyi-va-namayesh-khalagh.pdf',
             'جامعه شناسی آموزش و پرورش': 'pdfs/book-jamee-shenasi-amouzesh-va-parvaresh.pdf',
@@ -133,7 +128,6 @@
             'اخلاق حرفه ای در تعلیم و تربیت': 'pdfs/book-akhlagh-herfei-dar-talim-tarbiat.pdf',
             'مکتب های فلسفی و نظریه های تربیتی': 'pdfs/book-maktab-falsafi-va-nazariye-tarbiati.pdf',
             'سازمان ها و قوانین آموزش و پرورش': 'pdfs/book-sazmanha-va-ghavanin-amouzesh-parvaresh.pdf',
-            'سیر تحول تعلیم و تربیت': 'pdfs/book-seir-tahavol-talim-tarbiat.pdf',
             'مشاوره تحصیلی و شغلی': 'pdfs/book-moshavereh-tahsili-va-sheghli.pdf',
             'نظارت و راهنمایی آموزشی': 'pdfs/book-nezarat-va-rahnamayi-amouzeshi.pdf',
             'روش تدریس ریاضیات': 'pdfs/book-ravesh-tadris-riaziat.pdf',
@@ -152,12 +146,21 @@
             'روانشناسی یادگیری': 'pdfs/book-ravanshenasi-yadgiri.pdf',
             'روانشناسی سلامت': 'pdfs/book-ravanshenasi-salamat.pdf',
             'روانشناسی بازی': 'pdfs/book-ravanshenasi-bazi.pdf',
-            'الگوها و روش تدریس': 'pdfs/book-olgoo-va-ravesh-tadris.pdf',
             'روانشناسی رشد': 'book-ravanshenasi-roshd.pdf',
-            'روانشناسی تفاوت فردی': 'book-ravanshenasi-tafavot-fardi.pdf'
+            
+            // لیست جدید که خودت فرستادی:
+            'سیر تحول تعلیم و تربیت در ایران قبل و بعد از اسلام': 'pdfs/book-seir-tahavol-talim-tarbiat.pdf',
+            'تعلیم و تربیت اسلامی': 'pdfs/book-mabani-osoul-talim-va-tarbiat.pdf',
+            'آموزش و پرورش پیش دبستانی دبستان و متوسطه در ایران': 'pdfs/book-amouzesh-parvaresh-pish-dabestani.pdf',
+            'روان شناسی و آموزش کودکان با نیاز های ویژه': 'pdfs/book-ravanshenasi-koodakan-niaz-vizhe.pdf',
+            'مقدمات روش های تحقیق کمی و کیفی': 'pdfs/book-ravesh-haye-tahghigh-kami-va-keyfi.pdf',
+            'آموزه های تربیتی آیات قرآن': 'pdfs/book-amoozeh-tarbiati-ayat-ghoran.pdf',
+            'اختلال های رفتاری و هیجانی': 'pdfs/book-ekhtelal-raftari-va-hayajani.pdf',
+            'الگوها و روش های تدریس': 'pdfs/book-olgoo-va-ravesh-tadris.pdf',
+            'روان شناسی تفاوت فردی': 'book-ravanshenasi-tafavot-fardi.pdf',
+            'برنامه ریزی درسی دوره های تحصیلی پیش دبستانی و دبستان': 'pdfs/book-barname-rizi-pish-dabestani-va-dabestan.pdf'
         };
 
-        // پیدا کردن فایل مرتبط بدون توجه به فاصله‌ها
         let targetFile = null;
         for (let key in bookFiles) {
             if (cleanText(key) === cleanText(courseName)) {
