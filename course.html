@@ -162,11 +162,17 @@
             'برنامه ریزی درسی دوره های تحصیلی پیش دبستانی و دبستان': 'pdfs/book-barname-rizi-pish-dabestani-va-dabestan.pdf'
         };
 
-        let targetFile = null;
-        for (let key in bookFiles) {
-            if (cleanText(key) === cleanText(courseName)) {
-                targetFile = bookFiles[key];
-                break;
+    let targetFile = null;
+for (let key in bookFiles) {
+    let cleanKey = cleanText(key);
+    let cleanCourse = cleanText(courseName);
+    
+    // این شرط جدید خیلی منعطف‌تره و کاراکترهای اضافی رو نادیده می‌گیره
+    if (cleanCourse === cleanKey || cleanCourse.includes(cleanKey) || cleanKey.includes(cleanCourse)) {
+        targetFile = bookFiles[key];
+        break;
+    }
+}
             }
         }
 
