@@ -86,6 +86,15 @@
 </a>
     </div>
 <script>
+    function cleanText(text) {
+        if (!text) return "";
+        // این تابع فاصله‌ها، نیم‌فاصله‌ها، خط تیره و حروف عربی رو یکسان میکنه
+        return text
+            .replace(/ي/g, 'ی')
+            .replace(/ك/g, 'ک')
+            .replace(/[\s\u200c\-_]/g, ''); 
+    }
+
     const urlParams = new URLSearchParams(window.location.search);
     const courseName = urlParams.get('name');
     
@@ -94,7 +103,7 @@
         
         const buttons = document.querySelectorAll('.file-card');
         
-        // لیست کامل کتاب‌ها و فایل‌های PDF آن‌ها
+        // لیست کامل کتاب‌ها
         const bookFiles = {
             'منطق': 'pdfs/book-manteq.pdf',
             'روانشناسی تربیتی': 'pdfs/book-ravanshenasi-tarbiati.pdf',
@@ -128,11 +137,11 @@
             'مشاوره تحصیلی و شغلی': 'pdfs/book-moshavereh-tahsili-va-sheghli.pdf',
             'نظارت و راهنمایی آموزشی': 'pdfs/book-nezarat-va-rahnamayi-amouzeshi.pdf',
             'روش تدریس ریاضیات': 'pdfs/book-ravesh-tadris-riaziat.pdf',
-            'روش تدریس علوم تجربی واجتماعی': 'pdfs/book-ravesh-tadris-oloom-tajrobi-va-ejtemaei.pdf',
+            'روش تدریس علوم تجربی و اجتماعی': 'pdfs/book-ravesh-tadris-oloom-tajrobi-va-ejtemaei.pdf',
             'روش تدریس فارسی و آموزش کودکان دو زبانه': 'pdfs/book-ravesh-tadris-farsi-koodakan-do-zabaneh.pdf',
             'روش های اصلاح رفتار': 'pdfs/book-ravesh-eslah-raftar.pdf',
             'تکنولوژی آموزشی': 'pdfs/book-teknoloji-amouzeshi.pdf',
-            'روان شناسی عمومی': 'pdfs/book-ravanshenasi-omomi.pdf',
+            'روانشناسی عمومی': 'pdfs/book-ravanshenasi-omomi.pdf',
             'روانشناسی شخصیت': 'pdfs/book-ravanshenasi-shakhsiat.pdf',
             'سنجش و اندازه گیری': 'pdfs/book-sanjesh-va-andaze-giri.pdf',
             'متون تخصصی': 'pdfs/book-motoon-takhassosi.pdf',
@@ -144,20 +153,22 @@
             'روانشناسی سلامت': 'pdfs/book-ravanshenasi-salamat.pdf',
             'روانشناسی بازی': 'pdfs/book-ravanshenasi-bazi.pdf',
             'الگوها و روش تدریس': 'pdfs/book-olgoo-va-ravesh-tadris.pdf',
-            
-            // این دو تا کتاب بیرون از پوشه بودن:
             'روانشناسی رشد': 'book-ravanshenasi-roshd.pdf',
             'روانشناسی تفاوت فردی': 'book-ravanshenasi-tafavot-fardi.pdf'
         };
 
-        if (bookFiles[courseName]) {
-            const fileName = bookFiles[courseName];
-            
-            if(buttons[2]) {
-        buttons[2].href = fileName + '?raw=true'; buttons[2].target = '_blank';
+        // پیدا کردن فایل مرتبط بدون توجه به فاصله‌ها
+        let targetFile = null;
+        for (let key in bookFiles) {
+            if (cleanText(key) === cleanText(courseName)) {
+                targetFile = bookFiles[key];
+                break;
             }
         }
+
+        if (targetFile && buttons[2]) {
+            buttons[2].href = targetFile + '?raw=true';
+            buttons[2].target = '_blank';
+        }
     }
-                </script>
-</body>
-</html>
+</script>
