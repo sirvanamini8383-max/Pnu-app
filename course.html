@@ -91,7 +91,7 @@
         return text
             .replace(/ي/g, 'ی')
             .replace(/ك/g, 'ک')
-            .replace(/[\s\u200c\-_]/g, ''); 
+            .replace(/[^\u0600-\u06FF]/g, ''); 
     }
 
     const urlParams = new URLSearchParams(window.location.search);
@@ -103,6 +103,7 @@
         const buttons = document.querySelectorAll('.file-card');
         
         const bookFiles = {
+            // --- کتاب‌های تست شده و درست ---
             'منطق': 'pdfs/book-manteq.pdf',
             'روانشناسی تربیتی': 'pdfs/book-ravanshenasi-tarbiati.pdf',
             'آمار توصیفی': 'pdfs/book-amar-tosifi.pdf',
@@ -148,7 +149,7 @@
             'روانشناسی بازی': 'pdfs/book-ravanshenasi-bazi.pdf',
             'روانشناسی رشد': 'book-ravanshenasi-roshd.pdf',
             
-            // لیست جدید که خودت فرستادی:
+            // --- کتاب‌هایی که اسمشون رو دقیق کردیم ---
             'سیر تحول تعلیم و تربیت در ایران قبل و بعد از اسلام': 'pdfs/book-seir-tahavol-talim-tarbiat.pdf',
             'تعلیم و تربیت اسلامی': 'pdfs/book-mabani-osoul-talim-va-tarbiat.pdf',
             'آموزش و پرورش پیش دبستانی دبستان و متوسطه در ایران': 'pdfs/book-amouzesh-parvaresh-pish-dabestani.pdf',
