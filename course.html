@@ -98,7 +98,7 @@
     const courseName = urlParams.get('name');
     
     if (courseName) {
-        document.getElementById('course-name').innerText = courseName;
+        if(document.getElementById('course-name')) { document.getElementById('course-name').innerText = courseName; }
         
         const buttons = document.querySelectorAll('.file-card');
         
