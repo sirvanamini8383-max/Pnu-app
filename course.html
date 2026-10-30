@@ -100,13 +100,11 @@
         const courseName = urlParams.get('name');
         
         if (courseName) {
-            // 1. تغییر عنوان صفحه
             const titleElement = document.getElementById('course-name');
             if (titleElement) {
                 titleElement.innerText = courseName;
             }
 
-            // 2. لیست فایل‌ها
             const bookFiles = {
                 'منطق': 'pdfs/book-manteq.pdf',
                 'روانشناسی تربیتی': 'pdfs/book-ravanshenasi-tarbiati.pdf',
@@ -152,6 +150,7 @@
                 'روانشناسی سلامت': 'pdfs/book-ravanshenasi-salamat.pdf',
                 'روانشناسی بازی': 'pdfs/book-ravanshenasi-bazi.pdf',
                 'روانشناسی رشد': 'book-ravanshenasi-roshd.pdf',
+                'آموزش و پرورش تطبیقی': 'pdfs/book-amouzesh-parvaresh-tatbighi.pdf',
                 'سیر تحول تعلیم و تربیت در ایران قبل و بعد از اسلام': 'pdfs/book-seir-tahavol-talim-tarbiat.pdf',
                 'تعلیم و تربیت اسلامی': 'pdfs/book-mabani-osoul-talim-va-tarbiat.pdf',
                 'آموزش و پرورش پیش دبستانی دبستان و متوسطه در ایران': 'pdfs/book-amouzesh-parvaresh-pish-dabestani.pdf',
@@ -164,11 +163,11 @@
                 'برنامه ریزی درسی دوره های تحصیلی پیش دبستانی و دبستان': 'pdfs/book-barname-rizi-pish-dabestani-va-dabestan.pdf'
             };
 
-            // 3. اتصال فایل PDF به دکمه کتاب
             let targetFile = null;
             for (let key in bookFiles) {
                 let cleanKey = cleanText(key);
                 let cleanCourse = cleanText(courseName);
+                
                 if (cleanCourse === cleanKey || cleanCourse.includes(cleanKey) || cleanKey.includes(cleanCourse)) {
                     targetFile = bookFiles[key];
                     break;
@@ -177,8 +176,7 @@
 
             const bookBtn = document.getElementById('book-btn');
             if (targetFile && bookBtn) {
-            bookBtn.href = 'https://docs.google.com/viewer?url=' + encodeURIComponent('https://sirvanamini8383-max.github.io/Pnu-app/' + targetFile);
-                bookBtn.target = '_blank';
+                bookBtn.href = 'https://docs.google.com/viewer?url=' + encodeURIComponent('https://sirvanamini8383-max.github.io/Pnu-app/' + targetFile);
             }
         }
     </script>
