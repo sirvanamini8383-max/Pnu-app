@@ -122,12 +122,10 @@
                 'بهداشت و تغذیه مادر و کودک': 'pdfs/book-behdasht-taghziye-madar-koodak.pdf',
                 'ارتباط انسانی': 'pdfs/book-ertebat-ensani.pdf',
                 'قصه گویی و نمایش خلاق': 'pdfs/book-gheseh-gooyi-va-namayesh-khalagh.pdf',
-                'جامعه شناسی آموزش و پرورش': 'pdfs/book-jamee-shenasi-amouzesh-va-parvaresh.pdf',
                 'آشنایی با کتاب خانه و مهارت های سواد اطلاعاتی': 'pdfs/book-ketabkhaneh-va-savad-ettelaati.pdf',
                 'خانواده در اسلام': 'pdfs/book-khanevadeh-dar-eslam.pdf',
                 'مبانی و اصول برنامه ریزی درسی': 'pdfs/book-mabani-osoul-barname-rizi-darsi.pdf',
                 'مبانی راهنمایی و مشاوره': 'pdfs/book-mabani-rahnamayi-va-moshavereh.pdf',
-                'مبانی و اصول مدیریت آموزشی': 'pdfs/book-mabani-va-osoul-modiriat-amouzeshi.pdf',
                 'اخلاق حرفه ای در تعلیم و تربیت': 'pdfs/book-akhlagh-herfei-dar-talim-tarbiat.pdf',
                 'مکتب های فلسفی و نظریه های تربیتی': 'pdfs/book-maktab-falsafi-va-nazariye-tarbiati.pdf',
                 'سازمان ها و قوانین آموزش و پرورش': 'pdfs/book-sazmanha-va-ghavanin-amouzesh-parvaresh.pdf',
@@ -149,7 +147,6 @@
                 'روانشناسی یادگیری': 'pdfs/book-ravanshenasi-yadgiri.pdf',
                 'روانشناسی سلامت': 'pdfs/book-ravanshenasi-salamat.pdf',
                 'روانشناسی بازی': 'pdfs/book-ravanshenasi-bazi.pdf',
-                'روانشناسی رشد': 'book-ravanshenasi-roshd.pdf',
                 'آموزش و پرورش تطبیقی': 'pdfs/book-amouzesh-parvaresh-tatbighi.pdf',
                 'سیر تحول تعلیم و تربیت در ایران قبل و بعد از اسلام': 'pdfs/book-seir-tahavol-talim-tarbiat.pdf',
                 'تعلیم و تربیت اسلامی': 'pdfs/book-mabani-osoul-talim-va-tarbiat.pdf',
@@ -159,8 +156,30 @@
                 'آموزه های تربیتی آیات قرآن': 'pdfs/book-amoozeh-tarbiati-ayat-ghoran.pdf',
                 'اختلال های رفتاری و هیجانی': 'pdfs/book-ekhtelal-raftari-va-hayajani.pdf',
                 'الگوها و روش های تدریس': 'pdfs/book-olgoo-va-ravesh-tadris.pdf',
+                'برنامه ریزی درسی دوره های تحصیلی پیش دبستانی و دبستان': 'pdfs/book-barname-rizi-pish-dabestani-va-dabestan.pdf',
+                
+                // --- کتاب‌هایی که مشکل داشتن (با همه حالت‌های ممکن اسم) ---
+                
+                // 1. مبانی و اصول مدیریت آموزشی
+                'مبانی و اصول مدیریت آموزشی': 'pdfs/book-mabani-va-osoul-modiriat-amouzeshi.pdf',
+                'مبانی و اصول مدیریت اموزشی': 'pdfs/book-mabani-va-osoul-modiriat-amouzeshi.pdf',
+                
+                // 2. روانشناسی تفاوت فردی (بیرون از پوشه آبی)
+                'روان شناسی تفاوت فردی': 'book-ravanshenasi-tafavot-fardi.pdf',
+                'روانشناسی تفاوت فردی': 'book-ravanshenasi-tafavot-fardi.pdf',
                 'روان شناسی تفاوت های فردی': 'book-ravanshenasi-tafavot-fardi.pdf',
-                'برنامه ریزی درسی دوره های تحصیلی پیش دبستانی و دبستان': 'pdfs/book-barname-rizi-pish-dabestani-va-dabestan.pdf'
+                'روانشناسی تفاوت های فردی': 'book-ravanshenasi-tafavot-fardi.pdf',
+                
+                // 3. منطق
+                'منطق': 'pdfs/book-manteq.pdf',
+                
+                // 4. روانشناسی رشد (بیرون از پوشه آبی)
+                'روان شناسی رشد': 'book-ravanshenasi-roshd.pdf',
+                'روانشناسی رشد': 'book-ravanshenasi-roshd.pdf',
+                
+                // 5. جامعه شناسی آموزش و پرورش
+                'جامعه شناسی آموزش و پرورش': 'pdfs/book-jamee-shenasi-amouzesh-va-parvaresh.pdf',
+                'جامعه شناسی آموزش پرورش': 'pdfs/book-jamee-shenasi-amouzesh-va-parvaresh.pdf'
             };
 
             let targetFile = null;
@@ -182,7 +201,7 @@
                 // اگر کتاب روانشناسی تربیتی بود (چون حجمش زیاده)
                 if (targetFile.includes('ravanshenasi-tarbiati')) {
                     bookBtn.href = 'https://sirvanamini8383-max.github.io/Pnu-app/' + targetFile;
-                    bookBtn.setAttribute('download', 'book-ravanshenasi-tarbiati.pdf'); // مجبور کردن مرورگر به دانلود
+                    bookBtn.setAttribute('download', 'book-ravanshenasi-tarbiati.pdf');
                     bookBtn.target = '_self'; 
                     bookText.innerText = "دانلود کتاب (حجم بالا)";
                     bookIcon.innerText = "📥";
