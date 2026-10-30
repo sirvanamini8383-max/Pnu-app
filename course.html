@@ -88,6 +88,7 @@
     </div>
 
     <script>
+        // این تابع فاصله‌ها و کاراکترهای نامرئی و حروف عربی/فارسی رو یکسان میکنه
         function cleanText(text) {
             if (!text) return "";
             return text
@@ -100,11 +101,13 @@
         const courseName = urlParams.get('name');
         
         if (courseName) {
+            // 1. تنظیم عنوان صفحه
             const titleElement = document.getElementById('course-name');
             if (titleElement) {
                 titleElement.innerText = courseName;
             }
 
+            // 2. لیست کامل کتاب‌ها و مسیر فایل‌های PDF آن‌ها
             const bookFiles = {
                 'منطق': 'pdfs/book-manteq.pdf',
                 'روانشناسی تربیتی': 'pdfs/book-ravanshenasi-tarbiati.pdf',
@@ -158,7 +161,7 @@
                 'الگوها و روش های تدریس': 'pdfs/book-olgoo-va-ravesh-tadris.pdf',
                 'برنامه ریزی درسی دوره های تحصیلی پیش دبستانی و دبستان': 'pdfs/book-barname-rizi-pish-dabestani-va-dabestan.pdf',
                 
-                // --- کتاب‌هایی که مشکل داشتن (با همه حالت‌های ممکن اسم) ---
+                // --- استثناها برای کتاب‌هایی که مشکل داشتن (با همه حالت‌های ممکن اسم) ---
                 
                 // 1. مبانی و اصول مدیریت آموزشی
                 'مبانی و اصول مدیریت آموزشی': 'pdfs/book-mabani-va-osoul-modiriat-amouzeshi.pdf',
@@ -182,6 +185,7 @@
                 'جامعه شناسی آموزش پرورش': 'pdfs/book-jamee-shenasi-amouzesh-va-parvaresh.pdf'
             };
 
+            // 3. پیدا کردن فایل مربوطه (با نادیده گرفتن فاصله‌ها و کاراکترهای اضافی)
             let targetFile = null;
             for (let key in bookFiles) {
                 let cleanKey = cleanText(key);
@@ -193,25 +197,17 @@
                 }
             }
 
+            // 4. تنظیم دکمه برای دانلود
             const bookBtn = document.getElementById('book-btn');
             const bookText = document.getElementById('book-text');
             const bookIcon = document.getElementById('book-icon');
 
             if (targetFile && bookBtn) {
-                // اگر کتاب روانشناسی تربیتی بود (چون حجمش زیاده)
-                if (targetFile.includes('ravanshenasi-tarbiati')) {
-                    bookBtn.href = 'https://sirvanamini8383-max.github.io/Pnu-app/' + targetFile;
-                    bookBtn.setAttribute('download', 'book-ravanshenasi-tarbiati.pdf');
-                    bookBtn.target = '_self'; 
-                    bookText.innerText = "دانلود کتاب (حجم بالا)";
-                    bookIcon.innerText = "📥";
-                } else {
-                    // برای بقیه کتاب‌ها همون نمایشگر گوگل
-                    bookBtn.href = 'https://docs.google.com/viewer?url=' + encodeURIComponent('https://sirvanamini8383-max.github.io/Pnu-app/' + targetFile);
-                    bookBtn.target = '_blank';
-                    bookText.innerText = "کتاب کامل";
-                    bookIcon.innerText = "📚";
-                }
+                bookBtn.href = 'https://sirvanamini8383-max.github.io/Pnu-app/' + targetFile;
+                bookBtn.setAttribute('download', targetFile);
+                bookBtn.target = '_self'; 
+                bookText.innerText = "دانلود کتاب";
+                bookIcon.innerText = "📥";
             }
         }
     </script>
