@@ -36,6 +36,7 @@
             font-size: 20px;
             color: #333;
             margin-right: 15px;
+            font-weight: bold;
         }
         .card-container {
             width: 100%;
@@ -66,119 +67,120 @@
 
     <div class="header">
         <a href="index.html" class="back-btn">🔙 بازگشت</a>
-        <div class="course-title" id="course-name">روانشناسی تربیتی</div>
+        <div class="course-title" id="course-name">در حال بارگذاری...</div>
     </div>
 
     <div class="card-container">
-        
-        <a href="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" target="_blank" class="file-card">
+        <a href="#" class="file-card">
             <span class="icon">📄</span>
-            <span>دانلود جزوه کامل</span>
+            <span>دانلود جزوه</span>
         </a>
 
-        <a href="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" target="_blank" class="file-card">
+        <a href="#" class="file-card">
             <span class="icon">📝</span>
-            <span>نمونه سوالات امتحانی</span>
+            <span>نمونه سوالات</span>
         </a>
-<a href="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" target="_blank" class="file-card">
-    <span class="icon">📚</span>
-    <span>کتاب کامل</span>
-</a>
+
+        <a href="#" class="file-card" id="book-btn">
+            <span class="icon">📚</span>
+            <span>کتاب کامل</span>
+        </a>
     </div>
-<script>
-    function cleanText(text) {
-        if (!text) return "";
-        return text
-            .replace(/ي/g, 'ی')
-            .replace(/ك/g, 'ک')
-            .replace(/[^\u0600-\u06FF]/g, ''); 
-    }
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const courseName = urlParams.get('name');
-    
-    if (courseName) {
-        if(document.getElementById('course-name')) { document.getElementById('course-name').innerText = courseName; }
-        
-        const buttons = document.querySelectorAll('.file-card');
-        
-        const bookFiles = {
-            // --- کتاب‌های تست شده و درست ---
-            'منطق': 'pdfs/book-manteq.pdf',
-            'روانشناسی تربیتی': 'pdfs/book-ravanshenasi-tarbiati.pdf',
-            'آمار توصیفی': 'pdfs/book-amar-tosifi.pdf',
-            'مدیریت عمومی': 'pdfs/book-modiriat-omomi.pdf',
-            'آمار استنباطی': 'pdfs/book-amar-estenbati.pdf',
-            'مبانی و اصول برنامه ریزی آموزشی': 'pdfs/book-mabani-va-osoul-barname-rizi-amouzeshi.pdf',
-            'مبانی و اصول تعلیم و تربیت': 'pdfs/book-mabani-osoul-talim-va-tarbiat.pdf',
-            'روانشناسی اجتماعی': 'pdfs/book-ravanshenasi-ejtemaei.pdf',
-            'طراحی آموزشی': 'pdfs/book-tarrahi-amouzeshi.pdf',
-            'آموزش هنر': 'pdfs/book-amouzesh-honar.pdf',
-            'آموزش تفکر به کودکان و نوجوانان': 'pdfs/book-amouzesh-tafakor-koodakan.pdf',
-            'آرای تربیتی اندیشمندان مسلمان': 'pdfs/book-ara-tarbiati-andishmandan-mosalaman.pdf',
-            'ارزشیابی آموزشی': 'pdfs/book-arzeshyabi-amouzeshi.pdf',
-            'بهداشت و تغذیه مادر و کودک': 'pdfs/book-behdasht-taghziye-madar-koodak.pdf',
-            'ارتباط انسانی': 'pdfs/book-ertebat-ensani.pdf',
-            'قصه گویی و نمایش خلاق': 'pdfs/book-gheseh-gooyi-va-namayesh-khalagh.pdf',
-            'جامعه شناسی آموزش و پرورش': 'pdfs/book-jamee-shenasi-amouzesh-va-parvaresh.pdf',
-            'آشنایی با کتاب خانه و مهارت های سواد اطلاعاتی': 'pdfs/book-ketabkhaneh-va-savad-ettelaati.pdf',
-            'خانواده در اسلام': 'pdfs/book-khanevadeh-dar-eslam.pdf',
-            'مبانی و اصول برنامه ریزی درسی': 'pdfs/book-mabani-osoul-barname-rizi-darsi.pdf',
-            'مبانی راهنمایی و مشاوره': 'pdfs/book-mabani-rahnamayi-va-moshavereh.pdf',
-            'مبانی و اصول مدیریت آموزشی': 'pdfs/book-mabani-va-osoul-modiriat-amouzeshi.pdf',
-            'اخلاق حرفه ای در تعلیم و تربیت': 'pdfs/book-akhlagh-herfei-dar-talim-tarbiat.pdf',
-            'مکتب های فلسفی و نظریه های تربیتی': 'pdfs/book-maktab-falsafi-va-nazariye-tarbiati.pdf',
-            'سازمان ها و قوانین آموزش و پرورش': 'pdfs/book-sazmanha-va-ghavanin-amouzesh-parvaresh.pdf',
-            'مشاوره تحصیلی و شغلی': 'pdfs/book-moshavereh-tahsili-va-sheghli.pdf',
-            'نظارت و راهنمایی آموزشی': 'pdfs/book-nezarat-va-rahnamayi-amouzeshi.pdf',
-            'روش تدریس ریاضیات': 'pdfs/book-ravesh-tadris-riaziat.pdf',
-            'روش تدریس علوم تجربی و اجتماعی': 'pdfs/book-ravesh-tadris-oloom-tajrobi-va-ejtemaei.pdf',
-            'روش تدریس فارسی و آموزش کودکان دو زبانه': 'pdfs/book-ravesh-tadris-farsi-koodakan-do-zabaneh.pdf',
-            'روش های اصلاح رفتار': 'pdfs/book-ravesh-eslah-raftar.pdf',
-            'تکنولوژی آموزشی': 'pdfs/book-teknoloji-amouzeshi.pdf',
-            'روانشناسی عمومی': 'pdfs/book-ravanshenasi-omomi.pdf',
-            'روانشناسی شخصیت': 'pdfs/book-ravanshenasi-shakhsiat.pdf',
-            'سنجش و اندازه گیری': 'pdfs/book-sanjesh-va-andaze-giri.pdf',
-            'متون تخصصی': 'pdfs/book-motoon-takhassosi.pdf',
-            'تدوین و نگارش متون و گزارش های علمی': 'pdfs/book-tadvin-negaresh-motoon-va-gozaresh-elmi.pdf',
-            'تربیت اخلاقی': 'pdfs/book-tarbiat-akhlaghi.pdf',
-            'تربیت رسانه ای': 'pdfs/book-tarbiat-resanei.pdf',
-            'تولید محتوای الکترونیکی': 'pdfs/book-tolid-mohtava-elektroniki.pdf',
-            'روانشناسی یادگیری': 'pdfs/book-ravanshenasi-yadgiri.pdf',
-            'روانشناسی سلامت': 'pdfs/book-ravanshenasi-salamat.pdf',
-            'روانشناسی بازی': 'pdfs/book-ravanshenasi-bazi.pdf',
-            'روانشناسی رشد': 'book-ravanshenasi-roshd.pdf',
-            
-            // --- کتاب‌هایی که اسمشون رو دقیق کردیم ---
-            'سیر تحول تعلیم و تربیت در ایران قبل و بعد از اسلام': 'pdfs/book-seir-tahavol-talim-tarbiat.pdf',
-            'تعلیم و تربیت اسلامی': 'pdfs/book-mabani-osoul-talim-va-tarbiat.pdf',
-            'آموزش و پرورش پیش دبستانی دبستان و متوسطه در ایران': 'pdfs/book-amouzesh-parvaresh-pish-dabestani.pdf',
-            'روان شناسی و آموزش کودکان با نیاز های ویژه': 'pdfs/book-ravanshenasi-koodakan-niaz-vizhe.pdf',
-            'مقدمات روش های تحقیق کمی و کیفی': 'pdfs/book-ravesh-haye-tahghigh-kami-va-keyfi.pdf',
-            'آموزه های تربیتی آیات قرآن': 'pdfs/book-amoozeh-tarbiati-ayat-ghoran.pdf',
-            'اختلال های رفتاری و هیجانی': 'pdfs/book-ekhtelal-raftari-va-hayajani.pdf',
-            'الگوها و روش های تدریس': 'pdfs/book-olgoo-va-ravesh-tadris.pdf',
-            'روان شناسی تفاوت های فردی': 'book-ravanshenasi-tafavot-fardi.pdf',
-            'برنامه ریزی درسی دوره های تحصیلی پیش دبستانی و دبستان': 'pdfs/book-barname-rizi-pish-dabestani-va-dabestan.pdf'
-        };
+    <script>
+        function cleanText(text) {
+            if (!text) return "";
+            return text
+                .replace(/ي/g, 'ی')
+                .replace(/ك/g, 'ک')
+                .replace(/[^\u0600-\u06FF]/g, ''); 
+        }
 
-    let targetFile = null;
-for (let key in bookFiles) {
-    let cleanKey = cleanText(key);
-    let cleanCourse = cleanText(courseName);
-    
-    // این شرط جدید خیلی منعطف‌تره و کاراکترهای اضافی رو نادیده می‌گیره
-    if (cleanCourse === cleanKey || cleanCourse.includes(cleanKey) || cleanKey.includes(cleanCourse)) {
-        targetFile = bookFiles[key];
-        break;
-    }
-}
+        const urlParams = new URLSearchParams(window.location.search);
+        const courseName = urlParams.get('name');
+        
+        if (courseName) {
+            // 1. تغییر عنوان صفحه
+            const titleElement = document.getElementById('course-name');
+            if (titleElement) {
+                titleElement.innerText = courseName;
+            }
+
+            // 2. لیست فایل‌ها
+            const bookFiles = {
+                'منطق': 'pdfs/book-manteq.pdf',
+                'روانشناسی تربیتی': 'pdfs/book-ravanshenasi-tarbiati.pdf',
+                'آمار توصیفی': 'pdfs/book-amar-tosifi.pdf',
+                'مدیریت عمومی': 'pdfs/book-modiriat-omomi.pdf',
+                'آمار استنباطی': 'pdfs/book-amar-estenbati.pdf',
+                'مبانی و اصول برنامه ریزی آموزشی': 'pdfs/book-mabani-va-osoul-barname-rizi-amouzeshi.pdf',
+                'مبانی و اصول تعلیم و تربیت': 'pdfs/book-mabani-osoul-talim-va-tarbiat.pdf',
+                'روانشناسی اجتماعی': 'pdfs/book-ravanshenasi-ejtemaei.pdf',
+                'طراحی آموزشی': 'pdfs/book-tarrahi-amouzeshi.pdf',
+                'آموزش هنر': 'pdfs/book-amouzesh-honar.pdf',
+                'آموزش تفکر به کودکان و نوجوانان': 'pdfs/book-amouzesh-tafakor-koodakan.pdf',
+                'آرای تربیتی اندیشمندان مسلمان': 'pdfs/book-ara-tarbiati-andishmandan-mosalaman.pdf',
+                'ارزشیابی آموزشی': 'pdfs/book-arzeshyabi-amouzeshi.pdf',
+                'بهداشت و تغذیه مادر و کودک': 'pdfs/book-behdasht-taghziye-madar-koodak.pdf',
+                'ارتباط انسانی': 'pdfs/book-ertebat-ensani.pdf',
+                'قصه گویی و نمایش خلاق': 'pdfs/book-gheseh-gooyi-va-namayesh-khalagh.pdf',
+                'جامعه شناسی آموزش و پرورش': 'pdfs/book-jamee-shenasi-amouzesh-va-parvaresh.pdf',
+                'آشنایی با کتاب خانه و مهارت های سواد اطلاعاتی': 'pdfs/book-ketabkhaneh-va-savad-ettelaati.pdf',
+                'خانواده در اسلام': 'pdfs/book-khanevadeh-dar-eslam.pdf',
+                'مبانی و اصول برنامه ریزی درسی': 'pdfs/book-mabani-osoul-barname-rizi-darsi.pdf',
+                'مبانی راهنمایی و مشاوره': 'pdfs/book-mabani-rahnamayi-va-moshavereh.pdf',
+                'مبانی و اصول مدیریت آموزشی': 'pdfs/book-mabani-va-osoul-modiriat-amouzeshi.pdf',
+                'اخلاق حرفه ای در تعلیم و تربیت': 'pdfs/book-akhlagh-herfei-dar-talim-tarbiat.pdf',
+                'مکتب های فلسفی و نظریه های تربیتی': 'pdfs/book-maktab-falsafi-va-nazariye-tarbiati.pdf',
+                'سازمان ها و قوانین آموزش و پرورش': 'pdfs/book-sazmanha-va-ghavanin-amouzesh-parvaresh.pdf',
+                'مشاوره تحصیلی و شغلی': 'pdfs/book-moshavereh-tahsili-va-sheghli.pdf',
+                'نظارت و راهنمایی آموزشی': 'pdfs/book-nezarat-va-rahnamayi-amouzeshi.pdf',
+                'روش تدریس ریاضیات': 'pdfs/book-ravesh-tadris-riaziat.pdf',
+                'روش تدریس علوم تجربی و اجتماعی': 'pdfs/book-ravesh-tadris-oloom-tajrobi-va-ejtemaei.pdf',
+                'روش تدریس فارسی و آموزش کودکان دو زبانه': 'pdfs/book-ravesh-tadris-farsi-koodakan-do-zabaneh.pdf',
+                'روش های اصلاح رفتار': 'pdfs/book-ravesh-eslah-raftar.pdf',
+                'تکنولوژی آموزشی': 'pdfs/book-teknoloji-amouzeshi.pdf',
+                'روانشناسی عمومی': 'pdfs/book-ravanshenasi-omomi.pdf',
+                'روانشناسی شخصیت': 'pdfs/book-ravanshenasi-shakhsiat.pdf',
+                'سنجش و اندازه گیری': 'pdfs/book-sanjesh-va-andaze-giri.pdf',
+                'متون تخصصی': 'pdfs/book-motoon-takhassosi.pdf',
+                'تدوین و نگارش متون و گزارش های علمی': 'pdfs/book-tadvin-negaresh-motoon-va-gozaresh-elmi.pdf',
+                'تربیت اخلاقی': 'pdfs/book-tarbiat-akhlaghi.pdf',
+                'تربیت رسانه ای': 'pdfs/book-tarbiat-resanei.pdf',
+                'تولید محتوای الکترونیکی': 'pdfs/book-tolid-mohtava-elektroniki.pdf',
+                'روانشناسی یادگیری': 'pdfs/book-ravanshenasi-yadgiri.pdf',
+                'روانشناسی سلامت': 'pdfs/book-ravanshenasi-salamat.pdf',
+                'روانشناسی بازی': 'pdfs/book-ravanshenasi-bazi.pdf',
+                'روانشناسی رشد': 'book-ravanshenasi-roshd.pdf',
+                'سیر تحول تعلیم و تربیت در ایران قبل و بعد از اسلام': 'pdfs/book-seir-tahavol-talim-tarbiat.pdf',
+                'تعلیم و تربیت اسلامی': 'pdfs/book-mabani-osoul-talim-va-tarbiat.pdf',
+                'آموزش و پرورش پیش دبستانی دبستان و متوسطه در ایران': 'pdfs/book-amouzesh-parvaresh-pish-dabestani.pdf',
+                'روان شناسی و آموزش کودکان با نیاز های ویژه': 'pdfs/book-ravanshenasi-koodakan-niaz-vizhe.pdf',
+                'مقدمات روش های تحقیق کمی و کیفی': 'pdfs/book-ravesh-haye-tahghigh-kami-va-keyfi.pdf',
+                'آموزه های تربیتی آیات قرآن': 'pdfs/book-amoozeh-tarbiati-ayat-ghoran.pdf',
+                'اختلال های رفتاری و هیجانی': 'pdfs/book-ekhtelal-raftari-va-hayajani.pdf',
+                'الگوها و روش های تدریس': 'pdfs/book-olgoo-va-ravesh-tadris.pdf',
+                'روان شناسی تفاوت های فردی': 'book-ravanshenasi-tafavot-fardi.pdf',
+                'برنامه ریزی درسی دوره های تحصیلی پیش دبستانی و دبستان': 'pdfs/book-barname-rizi-pish-dabestani-va-dabestan.pdf'
+            };
+
+            // 3. اتصال فایل PDF به دکمه کتاب
+            let targetFile = null;
+            for (let key in bookFiles) {
+                let cleanKey = cleanText(key);
+                let cleanCourse = cleanText(courseName);
+                if (cleanCourse === cleanKey || cleanCourse.includes(cleanKey) || cleanKey.includes(cleanCourse)) {
+                    targetFile = bookFiles[key];
+                    break;
+                }
+            }
+
+            const bookBtn = document.getElementById('book-btn');
+            if (targetFile && bookBtn) {
+                bookBtn.href = targetFile + '?raw=true';
+                bookBtn.target = '_blank';
             }
         }
-
-        if (targetFile && buttons[2]) {
-            buttons[2].href = targetFile + '?raw=true';
-            buttons[2].target = '_blank';
-        }
-    }
-</script>
+    </script>
+</body>
+</html>
