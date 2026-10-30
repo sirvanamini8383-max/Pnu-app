@@ -176,7 +176,14 @@
 
             const bookBtn = document.getElementById('book-btn');
             if (targetFile && bookBtn) {
-                bookBtn.href = 'https://docs.google.com/viewer?url=' + encodeURIComponent('https://sirvanamini8383-max.github.io/Pnu-app/' + targetFile);
+                // اگر کتاب روانشناسی تربیتی بود، لینک مستقیم بده (چون گوگل ارور میده)
+                if (targetFile.includes('ravanshenasi-tarbiati')) {
+                    bookBtn.href = 'https://sirvanamini8383-max.github.io/Pnu-app/' + targetFile + '?raw=true';
+                } else {
+                    // برای بقیه کتاب‌ها از نمایشگر گوگل استفاده کن
+                    bookBtn.href = 'https://docs.google.com/viewer?url=' + encodeURIComponent('https://sirvanamini8383-max.github.io/Pnu-app/' + targetFile);
+                }
+                bookBtn.target = '_blank';
             }
         }
     </script>
