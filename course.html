@@ -82,8 +82,8 @@
         </a>
 
         <a href="#" class="file-card" id="book-btn">
-            <span class="icon">📚</span>
-            <span>کتاب کامل</span>
+            <span class="icon" id="book-icon">📚</span>
+            <span id="book-text">کتاب کامل</span>
         </a>
     </div>
 
@@ -175,10 +175,24 @@
             }
 
             const bookBtn = document.getElementById('book-btn');
+            const bookText = document.getElementById('book-text');
+            const bookIcon = document.getElementById('book-icon');
+
             if (targetFile && bookBtn) {
-                // حالا برای همه کتاب‌ها از نمایشگر گوگل استفاده می‌کنیم
-                bookBtn.href = 'https://docs.google.com/viewer?url=' + encodeURIComponent('https://sirvanamini8383-max.github.io/Pnu-app/' + targetFile);
-                bookBtn.target = '_blank';
+                // اگر کتاب روانشناسی تربیتی بود (چون حجمش زیاده)
+                if (targetFile.includes('ravanshenasi-tarbiati')) {
+                    bookBtn.href = 'https://sirvanamini8383-max.github.io/Pnu-app/' + targetFile;
+                    bookBtn.setAttribute('download', 'book-ravanshenasi-tarbiati.pdf'); // مجبور کردن مرورگر به دانلود
+                    bookBtn.target = '_self'; 
+                    bookText.innerText = "دانلود کتاب (حجم بالا)";
+                    bookIcon.innerText = "📥";
+                } else {
+                    // برای بقیه کتاب‌ها همون نمایشگر گوگل
+                    bookBtn.href = 'https://docs.google.com/viewer?url=' + encodeURIComponent('https://sirvanamini8383-max.github.io/Pnu-app/' + targetFile);
+                    bookBtn.target = '_blank';
+                    bookText.innerText = "کتاب کامل";
+                    bookIcon.innerText = "📚";
+                }
             }
         }
     </script>
