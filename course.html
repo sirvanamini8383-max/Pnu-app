@@ -14,6 +14,9 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            -webkit-user-select: none; /* جلوگیری از انتخاب متن */
+            -ms-user-select: none;
+            user-select: none;
         }
         .header {
             width: 100%;
@@ -71,24 +74,29 @@
     </div>
 
     <div class="card-container">
-        <a href="#" class="file-card">
+        <!-- دکمه جزوه -->
+        <a href="#" class="file-card" id="jozve-btn">
             <span class="icon">📄</span>
-            <span>دانلود جزوه</span>
+            <span>مشاهده جزوه</span>
         </a>
 
+        <!-- دکمه نمونه سوال -->
         <a href="#" class="file-card">
             <span class="icon">📝</span>
             <span>نمونه سوالات</span>
         </a>
 
+        <!-- دکمه کتاب کامل -->
         <a href="#" class="file-card" id="book-btn">
-            <span class="icon" id="book-icon">📚</span>
-            <span id="book-text">کتاب کامل</span>
+            <span class="icon">📚</span>
+            <span>مشاهده کتاب کامل</span>
         </a>
     </div>
 
     <script>
-        // این تابع فاصله‌ها و کاراکترهای نامرئی و حروف عربی/فارسی رو یکسان میکنه
+        // غیرفعال کردن کلیک راست (برای جلوگیری از Save کردن راحت)
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
         function cleanText(text) {
             if (!text) return "";
             return text
@@ -101,13 +109,11 @@
         const courseName = urlParams.get('name');
         
         if (courseName) {
-            // 1. تنظیم عنوان صفحه
             const titleElement = document.getElementById('course-name');
             if (titleElement) {
                 titleElement.innerText = courseName;
             }
 
-            // 2. لیست کامل کتاب‌ها و مسیر فایل‌های PDF آن‌ها
             const bookFiles = {
                 'منطق': 'pdfs/book-manteq.pdf',
                 'روانشناسی تربیتی': 'pdfs/book-ravanshenasi-tarbiati.pdf',
@@ -160,54 +166,102 @@
                 'اختلال های رفتاری و هیجانی': 'pdfs/book-ekhtelal-raftari-va-hayajani.pdf',
                 'الگوها و روش های تدریس': 'pdfs/book-olgoo-va-ravesh-tadris.pdf',
                 'برنامه ریزی درسی دوره های تحصیلی پیش دبستانی و دبستان': 'pdfs/book-barname-rizi-pish-dabestani-va-dabestan.pdf',
-                
-                // --- استثناها برای کتاب‌هایی که مشکل داشتن (با همه حالت‌های ممکن اسم) ---
-                
-                // 1. مبانی و اصول مدیریت آموزشی
-                'مبانی و اصول مدیریت آموزشی': 'pdfs/book-mabani-va-osoul-modiriat-amouzeshi.pdf',
-                'مبانی و اصول مدیریت اموزشی': 'pdfs/book-mabani-va-osoul-modiriat-amouzeshi.pdf',
-                
-                // 2. روانشناسی تفاوت فردی (بیرون از پوشه آبی)
-                'روان شناسی تفاوت فردی': 'book-ravanshenasi-tafavot-fardi.pdf',
-                'روانشناسی تفاوت فردی': 'book-ravanshenasi-tafavot-fardi.pdf',
-                'روان شناسی تفاوت های فردی': 'book-ravanshenasi-tafavot-fardi.pdf',
-                'روانشناسی تفاوت های فردی': 'book-ravanshenasi-tafavot-fardi.pdf',
-                
-                // 3. منطق
-                'منطق': 'pdfs/book-manteq.pdf',
-                
-                // 4. روانشناسی رشد (بیرون از پوشه آبی)
-                'روان شناسی رشد': 'book-ravanshenasi-roshd.pdf',
-                'روانشناسی رشد': 'book-ravanshenasi-roshd.pdf',
-                
-                // 5. جامعه شناسی آموزش و پرورش
                 'جامعه شناسی آموزش و پرورش': 'pdfs/book-jamee-shenasi-amouzesh-va-parvaresh.pdf',
-                'جامعه شناسی آموزش پرورش': 'pdfs/book-jamee-shenasi-amouzesh-va-parvaresh.pdf'
+                'مبانی و اصول مدیریت آموزشی': 'pdfs/book-mabani-va-osoul-modiriat-amouzeshi.pdf',
+                'روان شناسی تفاوت فردی': 'book-ravanshenasi-tafavot-fardi.pdf',
+                'روان شناسی تفاوت های فردی': 'book-ravanshenasi-tafavot-fardi.pdf',
+                'روان شناسی رشد': 'book-ravanshenasi-roshd.pdf'
             };
 
-            // 3. پیدا کردن فایل مربوطه (با نادیده گرفتن فاصله‌ها و کاراکترهای اضافی)
-            let targetFile = null;
+            const jozveFiles = {
+                'منطق': 'pdfs/jozve-manteq.pdf',
+                'روانشناسی تربیتی': 'pdfs/jozve-ravanshenasi-tarbiati.pdf',
+                'آمار توصیفی': 'pdfs/jozve-amar-tosifi.pdf',
+                'مدیریت عمومی': 'pdfs/jozve-modiriat-omomi.pdf',
+                'آمار استنباطی': 'pdfs/jozve-amar-estenbati.pdf',
+                'مبانی و اصول برنامه ریزی آموزشی': 'pdfs/jozve-mabani-va-osoul-barname-rizi-amouzeshi.pdf',
+                'مبانی و اصول تعلیم و تربیت': 'pdfs/jozve-mabani-osoul-talim-va-tarbiat.pdf',
+                'روانشناسی اجتماعی': 'pdfs/jozve-ravanshenasi-ejtemaei.pdf',
+                'طراحی آموزشی': 'pdfs/jozve-tarrahi-amouzeshi.pdf',
+                'آموزش هنر': 'pdfs/jozve-amouzesh-honar.pdf',
+                'آموزش تفکر به کودکان و نوجوانان': 'pdfs/jozve-amouzesh-tafakor-koodakan.pdf',
+                'آرای تربیتی اندیشمندان مسلمان': 'pdfs/jozve-ara-tarbiati-andishmandan-mosalaman.pdf',
+                'ارزشیابی آموزشی': 'pdfs/jozve-arzeshyabi-amouzeshi.pdf',
+                'بهداشت و تغذیه مادر و کودک': 'pdfs/jozve-behdasht-taghziye-madar-koodak.pdf',
+                'ارتباط انسانی': 'pdfs/jozve-ertebat-ensani.pdf',
+                'قصه گویی و نمایش خلاق': 'pdfs/jozve-gheseh-gooyi-va-namayesh-khalagh.pdf',
+                'آشنایی با کتاب خانه و مهارت های سواد اطلاعاتی': 'pdfs/jozve-ketabkhaneh-va-savad-ettelaati.pdf',
+                'خانواده در اسلام': 'pdfs/jozve-khanevadeh-dar-eslam.pdf',
+                'مبانی و اصول برنامه ریزی درسی': 'pdfs/jozve-mabani-osoul-barname-rizi-darsi.pdf',
+                'مبانی راهنمایی و مشاوره': 'pdfs/jozve-mabani-rahnamayi-va-moshavereh.pdf',
+                'اخلاق حرفه ای در تعلیم و تربیت': 'pdfs/jozve-akhlagh-herfei-dar-talim-tarbiat.pdf',
+                'مکتب های فلسفی و نظریه های تربیتی': 'pdfs/jozve-maktab-falsafi-va-nazariye-tarbiati.pdf',
+                'سازمان ها و قوانین آموزش و پرورش': 'pdfs/jozve-sazmanha-va-ghavanin-amouzesh-parvaresh.pdf',
+                'مشاوره تحصیلی و شغلی': 'pdfs/jozve-moshavereh-tahsili-va-sheghli.pdf',
+                'نظارت و راهنمایی آموزشی': 'pdfs/jozve-nezarat-va-rahnamayi-amouzeshi.pdf',
+                'روش تدریس ریاضیات': 'pdfs/jozve-ravesh-tadris-riaziat.pdf',
+                'روش تدریس علوم تجربی و اجتماعی': 'pdfs/jozve-ravesh-tadris-oloom-tajrobi-va-ejtemaei.pdf',
+                'روش تدریس فارسی و آموزش کودکان دو زبانه': 'pdfs/jozve-ravesh-tadris-farsi-koodakan-do-zabaneh.pdf',
+                'روش های اصلاح رفتار': 'pdfs/jozve-ravesh-eslah-raftar.pdf',
+                'تکنولوژی آموزشی': 'pdfs/jozve-teknoloji-amouzeshi.pdf',
+                'روانشناسی عمومی': 'pdfs/jozve-ravanshenasi-omomi.pdf',
+                'روانشناسی شخصیت': 'pdfs/jozve-ravanshenasi-shakhsiat.pdf',
+                'سنجش و اندازه گیری': 'pdfs/jozve-sanjesh-va-andaze-giri.pdf',
+                'متون تخصصی': 'pdfs/jozve-motoon-takhassosi.pdf',
+                'تدوین و نگارش متون و گزارش های علمی': 'pdfs/jozve-tadvin-negaresh-motoon-va-gozaresh-elmi.pdf',
+                'تربیت اخلاقی': 'pdfs/jozve-tarbiat-akhlaghi.pdf',
+                'تربیت رسانه ای': 'pdfs/jozve-tarbiat-resanei.pdf',
+                'تولید محتوای الکترونیکی': 'pdfs/jozve-tolid-mohtava-elektroniki.pdf',
+                'روانشناسی یادگیری': 'pdfs/jozve-ravanshenasi-yadgiri.pdf',
+                'روانشناسی سلامت': 'pdfs/jozve-ravanshenasi-salamat.pdf',
+                'روانشناسی بازی': 'pdfs/jozve-ravanshenasi-bazi.pdf',
+                'آموزش و پرورش تطبیقی': 'pdfs/jozve-amouzesh-parvaresh-tatbighi.pdf',
+                'سیر تحول تعلیم و تربیت در ایران قبل و بعد از اسلام': 'pdfs/jozve-seir-tahavol-talim-tarbiat.pdf',
+                'تعلیم و تربیت اسلامی': 'pdfs/jozve-mabani-osoul-talim-va-tarbiat.pdf',
+                'آموزش و پرورش پیش دبستانی دبستان و متوسطه در ایران': 'pdfs/jozve-amouzesh-parvaresh-pish-dabestani.pdf',
+                'روان شناسی و آموزش کودکان با نیاز های ویژه': 'pdfs/jozve-ravanshenasi-koodakan-niaz-vizhe.pdf',
+                'مقدمات روش های تحقیق کمی و کیفی': 'pdfs/jozve-ravesh-haye-tahghigh-kami-va-keyfi.pdf',
+                'آموزه های تربیتی آیات قرآن': 'pdfs/jozve-amoozeh-tarbiati-ayat-ghoran.pdf',
+                'اختلال های رفتاری و هیجانی': 'pdfs/jozve-ekhtelal-raftari-va-hayajani.pdf',
+                'الگوها و روش های تدریس': 'pdfs/jozve-olgoo-va-ravesh-tadris.pdf',
+                'برنامه ریزی درسی دوره های تحصیلی پیش دبستانی و دبستان': 'pdfs/jozve-barname-rizi-pish-dabestani-va-dabestan.pdf',
+                'جامعه شناسی آموزش و پرورش': 'pdfs/jozve-jamee-shenasi-amouzesh-va-parvaresh.pdf',
+                'مبانی و اصول مدیریت آموزشی': 'pdfs/jozve-mabani-va-osoul-modiriat-amouzeshi.pdf',
+                'روان شناسی تفاوت فردی': 'pdfs/jozve-ravanshenasi-tafavot-fardi.pdf',
+                'روان شناسی تفاوت های فردی': 'pdfs/jozve-ravanshenasi-tafavot-fardi.pdf',
+                'روان شناسی رشد': 'pdfs/jozve-ravanshenasi-roshd.pdf'
+            };
+
+            let targetBook = null;
             for (let key in bookFiles) {
-                let cleanKey = cleanText(key);
-                let cleanCourse = cleanText(courseName);
-                
-                if (cleanCourse === cleanKey || cleanCourse.includes(cleanKey) || cleanKey.includes(cleanCourse)) {
-                    targetFile = bookFiles[key];
+                if (cleanText(key) === cleanText(courseName) || cleanText(courseName).includes(cleanText(key)) || cleanText(key).includes(cleanText(courseName))) {
+                    targetBook = bookFiles[key];
                     break;
                 }
             }
 
-            // 4. تنظیم دکمه برای دانلود
-            const bookBtn = document.getElementById('book-btn');
-            const bookText = document.getElementById('book-text');
-            const bookIcon = document.getElementById('book-icon');
+            let targetJozve = null;
+            for (let key in jozveFiles) {
+                if (cleanText(key) === cleanText(courseName) || cleanText(courseName).includes(cleanText(key)) || cleanText(key).includes(cleanText(courseName))) {
+                    targetJozve = jozveFiles[key];
+                    break;
+                }
+            }
 
-            if (targetFile && bookBtn) {
-                bookBtn.href = 'https://sirvanamini8383-max.github.io/Pnu-app/' + targetFile;
-                bookBtn.setAttribute('download', targetFile);
-                bookBtn.target = '_self'; 
-                bookText.innerText = "دانلود کتاب";
-                bookIcon.innerText = "📥";
+            const baseUrl = 'https://sirvanamini8383-max.github.io/Pnu-app/';
+            
+            const bookBtn = document.getElementById('book-btn');
+            if (targetBook && bookBtn) {
+                // نمایش امن کتاب بدون دکمه دانلود
+                bookBtn.href = 'https://docs.google.com/viewer?url=' + encodeURIComponent(baseUrl + targetBook) + '&embedded=true';
+                bookBtn.target = '_blank';
+            }
+
+            const jozveBtn = document.getElementById('jozve-btn');
+            if (targetJozve && jozveBtn) {
+                // نمایش امن جزوه بدون دکمه دانلود
+                jozveBtn.href = 'https://docs.google.com/viewer?url=' + encodeURIComponent(baseUrl + targetJozve) + '&embedded=true';
+                jozveBtn.target = '_blank';
             }
         }
     </script>
