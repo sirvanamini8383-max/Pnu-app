@@ -14,7 +14,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            -webkit-user-select: none; /* جلوگیری از انتخاب متن */
+            -webkit-user-select: none; /* قفل کردن انتخاب متن */
             -ms-user-select: none;
             user-select: none;
         }
@@ -74,19 +74,16 @@
     </div>
 
     <div class="card-container">
-        <!-- دکمه جزوه -->
         <a href="#" class="file-card" id="jozve-btn">
             <span class="icon">📄</span>
             <span>مشاهده جزوه</span>
         </a>
 
-        <!-- دکمه نمونه سوال -->
         <a href="#" class="file-card">
             <span class="icon">📝</span>
             <span>نمونه سوالات</span>
         </a>
 
-        <!-- دکمه کتاب کامل -->
         <a href="#" class="file-card" id="book-btn">
             <span class="icon">📚</span>
             <span>مشاهده کتاب کامل</span>
@@ -94,7 +91,7 @@
     </div>
 
     <script>
-        // غیرفعال کردن کلیک راست (برای جلوگیری از Save کردن راحت)
+        // 1. قفل کردن کلیک راست
         document.addEventListener('contextmenu', event => event.preventDefault());
 
         function cleanText(text) {
@@ -252,15 +249,15 @@
             
             const bookBtn = document.getElementById('book-btn');
             if (targetBook && bookBtn) {
-                // نمایش امن کتاب بدون دکمه دانلود
-                bookBtn.href = 'https://docs.google.com/viewer?url=' + encodeURIComponent(baseUrl + targetBook) + '&embedded=true';
+                // لینک مستقیم برای سرعت بالا
+                bookBtn.href = baseUrl + targetBook + '?raw=true';
                 bookBtn.target = '_blank';
             }
 
             const jozveBtn = document.getElementById('jozve-btn');
             if (targetJozve && jozveBtn) {
-                // نمایش امن جزوه بدون دکمه دانلود
-                jozveBtn.href = 'https://docs.google.com/viewer?url=' + encodeURIComponent(baseUrl + targetJozve) + '&embedded=true';
+                // لینک مستقیم برای سرعت بالا
+                jozveBtn.href = baseUrl + targetJozve + '?raw=true';
                 jozveBtn.target = '_blank';
             }
         }
