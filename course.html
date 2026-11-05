@@ -86,7 +86,7 @@
             const closeBtn = document.getElementById('close-btn');
 
             function openViewer(url, title) {
-                frame.src = 'https://docs.google.com/viewer?url=' + encodeURIComponent(baseUrl + url) + '&embedded=true';
+                frame.src = 'https://drive.google.com/viewerng/viewer?embedded=true&url=' + encodeURIComponent(baseUrl + url);
                 modalTitle.innerText = title;
                 modal.style.display = 'flex';
             }
