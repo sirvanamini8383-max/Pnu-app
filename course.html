@@ -24,20 +24,20 @@
     </div>
 
     <div class="card-container">
-        <button class="file-card" id="jozve-btn">
+        <a href="#" class="file-card" id="jozve-btn">
             <span class="icon">📄</span>
             <span>دانلود جزوه</span>
-        </button>
+        </a>
 
-        <button class="file-card" style="opacity: 0.5; cursor: not-allowed;">
+        <a href="#" class="file-card" style="opacity: 0.5; cursor: not-allowed;">
             <span class="icon">📝</span>
             <span>نمونه سوالات (به زودی)</span>
-        </button>
+        </a>
 
-        <button class="file-card" id="book-btn">
+        <a href="#" class="file-card" id="book-btn">
             <span class="icon">📚</span>
             <span>دانلود کتاب کامل</span>
-        </button>
+        </a>
     </div>
 
     <script>
@@ -175,38 +175,20 @@
             for (let key in jozveFiles) { if (cleanText(key) === cleanText(courseName) || cleanText(courseName).includes(cleanText(key)) || cleanText(key).includes(cleanText(courseName))) { targetJozve = jozveFiles[key]; break; } }
 
             const baseUrl = 'https://sirvanamini8383-max.github.io/Pnu-app/';
-
-            // تابع جادویی برای دانلود اجباری فایل (دور زدن مرورگر)
-            function forceDownload(url) {
-                fetch(url)
-                    .then(response => {
-                        if (!response.ok) throw new Error('Network response was not ok');
-                        return response.blob();
-                    })
-                    .then(blob => {
-                        const blobUrl = window.URL.createObjectURL(blob);
-                        const a = document.createElement('a');
-                        a.href = blobUrl;
-                        a.download = url.split('/').pop(); // استخراج اسم فایل
-                        document.body.appendChild(a);
-                        a.click();
-                        document.body.removeChild(a);
-                        window.URL.revokeObjectURL(blobUrl);
-                    })
-                    .catch(error => {
-                        alert('خطا در دانلود فایل. لطفا اتصال اینترنت خود را بررسی کنید.');
-                    });
+            
+            const bookBtn = document.getElementById('book-btn');
+            if (targetBook && bookBtn) {
+                // لینک مستقیم با دستور دانلود
+                bookBtn.href = baseUrl + targetBook;
+                bookBtn.setAttribute('download', '');
             }
 
-            document.getElementById('book-btn').addEventListener('click', () => {
-                if (targetBook) forceDownload(baseUrl + targetBook);
-                else alert('فایل کتاب یافت نشد.');
-            });
-
-            document.getElementById('jozve-btn').addEventListener('click', () => {
-                if (targetJozve) forceDownload(baseUrl + targetJozve);
-                else alert('فایل جزوه یافت نشد.');
-            });
+            const jozveBtn = document.getElementById('jozve-btn');
+            if (targetJozve && jozveBtn) {
+                // لینک مستقیم با دستور دانلود
+                jozveBtn.href = baseUrl + targetJozve;
+                jozveBtn.setAttribute('download', '');
+            }
         }
     </script>
 </body>
