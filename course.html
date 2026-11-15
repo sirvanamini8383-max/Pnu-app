@@ -196,8 +196,9 @@
             const closeBtn = document.getElementById('close-btn');
 
             function openViewer(url, title) {
-                // تنها تغییر اینجاست: استفاده از نمایشگر گوگل
-                frame.src = 'https://docs.google.com/viewer?url=' + encodeURIComponent(baseUrl + url) + '&embedded=true';
+                // ترفند اصلی اینجاست: اضافه کردن ?raw=true برای باز شدن سریع و بدون خطا
+                const finalUrl = baseUrl + url + '?raw=true';
+                frame.src = 'https://mozilla.github.io/pdf.js/web/viewer.html?file=' + encodeURIComponent(finalUrl);
                 modalTitle.innerText = title;
                 modal.style.display = 'flex';
             }
@@ -219,4 +220,4 @@
         }
     </script>
 </body>
-</html>
+    </html>
