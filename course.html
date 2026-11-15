@@ -196,8 +196,7 @@
             const closeBtn = document.getElementById('close-btn');
 
             function openViewer(url, title) {
-                const finalUrl = baseUrl + url;
-                frame.src = 'https://docs.google.com/viewer?url=' + encodeURIComponent(finalUrl) + '&embedded=true';
+                frame.src = baseUrl + url + '?raw=true';
                 modalTitle.innerText = title;
                 modal.style.display = 'flex';
             }
