@@ -196,7 +196,8 @@
             const closeBtn = document.getElementById('close-btn');
 
             function openViewer(url, title) {
-                frame.src = 'https://mozilla.github.io/pdf.js/web/viewer.html?file=' + encodeURIComponent(baseUrl + url);
+                // تنها تغییر اینجاست: استفاده از نمایشگر گوگل
+                frame.src = 'https://docs.google.com/viewer?url=' + encodeURIComponent(baseUrl + url) + '&embedded=true';
                 modalTitle.innerText = title;
                 modal.style.display = 'flex';
             }
