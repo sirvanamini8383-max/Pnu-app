@@ -17,15 +17,7 @@
         
         #viewer-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); z-index: 1000; flex-direction: column; }
         #viewer-header { background: #fff; padding: 10px; display: flex; justify-content: space-between; align-items: center; }
-        
-        /* استایل دکمه‌های بالای صفحه */
-        .btn-group { display: flex; gap: 10px; }
-        
-        /* استایل دکمه دانلود (رنگ ملایم و غیر جیغ) */
-        #download-btn { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-family: inherit; font-weight: bold; text-decoration: none; font-size: 14px; display: flex; align-items: center; }
-        
         #close-btn { background: #ef4444; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-family: inherit; font-weight: bold;}
-        
         #viewer-frame { flex-grow: 1; width: 100%; border: none; }
     </style>
 </head>
@@ -56,10 +48,7 @@
     <div id="viewer-modal">
         <div id="viewer-header">
             <span id="modal-title" style="font-weight: bold; color: #333;">در حال بارگذاری...</span>
-            <div class="btn-group">
-                <a id="download-btn" target="_blank">📥 دانلود فایل</a>
-                <button id="close-btn">بستن ❌</button>
-            </div>
+            <button id="close-btn">بستن ❌</button>
         </div>
         <iframe id="viewer-frame" src=""></iframe>
     </div>
@@ -205,14 +194,10 @@
             const frame = document.getElementById('viewer-frame');
             const modalTitle = document.getElementById('modal-title');
             const closeBtn = document.getElementById('close-btn');
-            const downloadBtn = document.getElementById('download-btn');
 
             function openViewer(url, title) {
                 const finalUrl = baseUrl + url;
-                // نمایش سریع با PDF.js
-                frame.src = 'https://mozilla.github.io/pdf.js/web/viewer.html?file=' + encodeURIComponent(finalUrl);
-                // لینک دکمه دانلود (فقط وقتی خودش بزنه دانلود میشه)
-                downloadBtn.href = finalUrl + '?raw=true';
+                frame.src = 'https://docs.google.com/viewer?url=' + encodeURIComponent(finalUrl) + '&embedded=true';
                 modalTitle.innerText = title;
                 modal.style.display = 'flex';
             }
