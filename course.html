@@ -24,20 +24,20 @@
     </div>
 
     <div class="card-container">
-        <a href="#" class="file-card" id="jozve-btn">
+        <button class="file-card" id="jozve-btn">
             <span class="icon">📄</span>
             <span>دانلود جزوه</span>
-        </a>
+        </button>
 
-        <a href="#" class="file-card" style="opacity: 0.5; cursor: not-allowed;">
+        <button class="file-card" style="opacity: 0.5; cursor: not-allowed;">
             <span class="icon">📝</span>
             <span>نمونه سوالات (به زودی)</span>
-        </a>
+        </button>
 
-        <a href="#" class="file-card" id="book-btn">
+        <button class="file-card" id="book-btn">
             <span class="icon">📚</span>
             <span>دانلود کتاب کامل</span>
-        </a>
+        </button>
     </div>
 
     <script>
@@ -175,18 +175,38 @@
             for (let key in jozveFiles) { if (cleanText(key) === cleanText(courseName) || cleanText(courseName).includes(cleanText(key)) || cleanText(key).includes(cleanText(courseName))) { targetJozve = jozveFiles[key]; break; } }
 
             const baseUrl = 'https://sirvanamini8383-max.github.io/Pnu-app/';
-            
-            const bookBtn = document.getElementById('book-btn');
-            if (targetBook && bookBtn) {
-                bookBtn.href = baseUrl + targetBook + '?raw=true';
-                bookBtn.setAttribute('target', '_blank');
+
+            // تابع جادویی برای دانلود اجباری فایل (دور زدن مرورگر)
+            function forceDownload(url) {
+                fetch(url)
+                    .then(response => {
+                        if (!response.ok) throw new Error('Network response was not ok');
+                        return response.blob();
+                    })
+                    .then(blob => {
+                        const blobUrl = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = blobUrl;
+                        a.download = url.split('/').pop(); // استخراج اسم فایل
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        window.URL.revokeObjectURL(blobUrl);
+                    })
+                    .catch(error => {
+                        alert('خطا در دانلود فایل. لطفا اتصال اینترنت خود را بررسی کنید.');
+                    });
             }
 
-            const jozveBtn = document.getElementById('jozve-btn');
-            if (targetJozve && jozveBtn) {
-                jozveBtn.href = baseUrl + targetJozve + '?raw=true';
-                jozveBtn.setAttribute('target', '_blank');
-            }
+            document.getElementById('book-btn').addEventListener('click', () => {
+                if (targetBook) forceDownload(baseUrl + targetBook);
+                else alert('فایل کتاب یافت نشد.');
+            });
+
+            document.getElementById('jozve-btn').addEventListener('click', () => {
+                if (targetJozve) forceDownload(baseUrl + targetJozve);
+                else alert('فایل جزوه یافت نشد.');
+            });
         }
     </script>
 </body>
