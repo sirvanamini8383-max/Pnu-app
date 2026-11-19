@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>جزئیات درس</title>
     
-    <!-- کد گوگل آنالیتیکس -->
+    <!-- کد گوگل آنالیتیکس (ثبت بازدید و دانلودها) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-GQ0BFHMJZ8"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -188,25 +188,19 @@
             
             const bookBtn = document.getElementById('book-btn');
             if (targetBook && bookBtn) {
-                bookBtn.href = baseUrl + targetBook + '?raw=true';
-                bookBtn.setAttribute('target', '_blank');
-                // ثبت کلیک کتاب در گوگل آنالیتیکس
+                bookBtn.href = baseUrl + targetBook;
+                bookBtn.setAttribute('download', ''); 
                 bookBtn.addEventListener('click', function() {
-                    gtag('event', 'download_book', {
-                        'course_name': courseName
-                    });
+                    gtag('event', 'download_book', { 'course_name': courseName });
                 });
             }
 
             const jozveBtn = document.getElementById('jozve-btn');
             if (targetJozve && jozveBtn) {
-                jozveBtn.href = baseUrl + targetJozve + '?raw=true';
-                jozveBtn.setAttribute('target', '_blank');
-                // ثبت کلیک جزوه در گوگل آنالیتیکس
+                jozveBtn.href = baseUrl + targetJozve;
+                jozveBtn.setAttribute('download', '');
                 jozveBtn.addEventListener('click', function() {
-                    gtag('event', 'download_jozve', {
-                        'course_name': courseName
-                    });
+                    gtag('event', 'download_jozve', { 'course_name': courseName });
                 });
             }
         }
