@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>جزئیات درس</title>
+    
+    <!-- کد گوگل آنالیتیکس -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GQ0BFHMJZ8"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-GQ0BFHMJZ8');
+    </script>
+
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Vazirmatn', sans-serif; background-color: #f4f6f9; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
@@ -178,16 +188,26 @@
             
             const bookBtn = document.getElementById('book-btn');
             if (targetBook && bookBtn) {
-                // لینک مستقیم با دستور دانلود
-                bookBtn.href = baseUrl + targetBook;
-                bookBtn.setAttribute('download', '');
+                bookBtn.href = baseUrl + targetBook + '?raw=true';
+                bookBtn.setAttribute('target', '_blank');
+                // ثبت کلیک کتاب در گوگل آنالیتیکس
+                bookBtn.addEventListener('click', function() {
+                    gtag('event', 'download_book', {
+                        'course_name': courseName
+                    });
+                });
             }
 
             const jozveBtn = document.getElementById('jozve-btn');
             if (targetJozve && jozveBtn) {
-                // لینک مستقیم با دستور دانلود
-                jozveBtn.href = baseUrl + targetJozve;
-                jozveBtn.setAttribute('download', '');
+                jozveBtn.href = baseUrl + targetJozve + '?raw=true';
+                jozveBtn.setAttribute('target', '_blank');
+                // ثبت کلیک جزوه در گوگل آنالیتیکس
+                jozveBtn.addEventListener('click', function() {
+                    gtag('event', 'download_jozve', {
+                        'course_name': courseName
+                    });
+                });
             }
         }
     </script>
