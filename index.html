@@ -29,8 +29,6 @@
         /* استایل بخش نظرات */
         .reviews-container { background-color: white; border-radius: 15px; padding: 25px 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); width: 100%; max-width: 400px; text-align: right; margin-top: 20px; margin-bottom: 40px; }
         .reviews-container h2 { font-size: 18px; color: #1e3a8a; margin-top: 0; margin-bottom: 15px; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; }
-        .avg-rating { display: flex; align-items: center; justify-content: space-between; background: #f8fafc; padding: 10px 15px; border-radius: 10px; margin-bottom: 20px; font-weight: bold; }
-        .stars-display { color: #fbbf24; font-size: 20px; }
         
         .review-form { background: #f8fafc; padding: 15px; border-radius: 12px; margin-bottom: 25px; }
         .review-form input, .review-form textarea { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #d1d5db; border-radius: 8px; font-family: inherit; box-sizing: border-box; }
@@ -134,11 +132,6 @@
     <div class="reviews-container">
         <h2>نظرسنجی و امتیازدهی</h2>
         
-        <div class="avg-rating">
-            <span>میانگین امتیاز:</span>
-            <span id="average-rating" style="color: #1e3a8a;">در حال بارگذاری...</span>
-        </div>
-
         <div class="review-form">
             <input type="text" id="userName" placeholder="نام شما">
             <textarea id="userComment" placeholder="نظر خود را درباره این سایت بنویسید..."></textarea>
@@ -153,11 +146,12 @@
         </div>
 
         <div class="review-list" id="reviewList">
-            <!-- نظرات اینجا نمایش داده میشن -->
+            <!-- نظرات تایید شده اینجا نمایش داده میشن -->
+            <p style="text-align:center; color:#6b7280; font-size:13px;">(نظرات پس از تایید مدیر در این بخش نمایش داده می‌شوند)</p>
         </div>
     </div>
 
-    <!-- اسکریپت‌های سایت و فایربیس -->
+    <!-- اسکریپت لیست دروس -->
     <script>
         document.querySelectorAll('.course-item').forEach(item => {
             item.addEventListener('click', function(e) {
@@ -167,27 +161,14 @@
         });
     </script>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyDWh6P9WaVbsZFIboLCDL_m4n0tNOh1BG8",
-            authDomain: "pnu-app-e8c37.firebaseapp.com",
-            projectId: "pnu-app-e8c37",
-            storageBucket: "pnu-app-e8c37.firebasestorage.app",
-            messagingSenderId: "864101805944",
-            appId: "1:864101805944:web:56e0616d98cd1dc1b8a28d"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const reviewsCollection = collection(db, "reviews");
+    <!-- اسکریپت اتصال به ربات تلگرام -->
+    <script>
+        // تنظیمات ربات تلگرام
+        const TELEGRAM_BOT_TOKEN = "9088094745:AAHWeYTgmXj36yHg_gr6IB2iE-FNZU-4xg";
+        const TELEGRAM_CHAT_ID = "6532937700";
 
         let selectedRating = 5; // Default
         const stars = document.querySelectorAll('#starRating span');
-        const reviewList = document.getElementById('reviewList');
-        const averageRatingElement = document.getElementById('average-rating');
 
         // تنظیم ستاره‌ها
         stars.forEach(star => {
@@ -202,51 +183,7 @@
             if (star.getAttribute('data-value') <= 5) star.classList.add('active');
         });
 
-        // لود کردن نظرات
-        async function loadReviews() {
-            reviewList.innerHTML = '<p style="text-align:center; color:#6b7280;">در حال بارگذاری نظرات...</p>';
-            try {
-                const querySnapshot = await getDocs(reviewsCollection);
-                let totalRating = 0;
-                let count = 0;
-                let html = '';
-
-                querySnapshot.forEach((doc) => {
-                    const data = doc.data();
-                    const rating = parseInt(data.rating);
-                    totalRating += rating;
-                    count++;
-                    
-                    let starsHtml = '';
-                    for(let i=0; i<rating; i++) starsHtml += '★';
-                    for(let i=rating; i<5; i++) starsHtml += '☆';
-
-                    html += `
-                        <div class="review-item">
-                            <div class="review-header">
-                                <span class="review-name">${data.name || 'کاربر ناشناس'}</span>
-                                <span class="review-stars">${starsHtml}</span>
-                            </div>
-                            <p class="review-text">${data.comment}</p>
-                        </div>
-                    `;
-                });
-
-                if (count === 0) {
-                    reviewList.innerHTML = '<p style="text-align:center; color:#6b7280;">هنوز نظری ثبت نشده است. اولین نفر باشید!</p>';
-                    averageRatingElement.innerText = "بدون امتیاز";
-                } else {
-                    const avg = (totalRating / count).toFixed(1);
-                    averageRatingElement.innerHTML = `<span style="color:#fbbf24; font-size:20px;">★</span> ${avg} از ۵ (${count} نظر)`;
-                    reviewList.innerHTML = html;
-                }
-            } catch (error) {
-                console.error("Error loading reviews: ", error);
-                reviewList.innerHTML = '<p style="text-align:center; color:#ef4444;">خطا در دریافت نظرات. لطفاً اینترنت خود را بررسی کنید.</p>';
-            }
-        }
-
-        // ثبت نظر جدید
+        // ثبت نظر جدید و ارسال به تلگرام
         document.getElementById('submitReview').addEventListener('click', async () => {
             const name = document.getElementById('userName').value.trim();
             const comment = document.getElementById('userComment').value.trim();
@@ -260,29 +197,34 @@
             btn.innerText = "در حال ثبت...";
             btn.disabled = true;
 
+            const messageText = `🌟 نظر جدید از سایت علوم تربیتی مریوان:\n\n👤 نام: ${name}\n⭐ امتیاز: ${selectedRating} از 5\n💬 متن نظر:\n${comment}`;
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+
             try {
-                await addDoc(reviewsCollection, {
-                    name: name,
-                    comment: comment,
-                    rating: selectedRating,
-                    createdAt: serverTimestamp()
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: messageText
+                    })
                 });
 
-                document.getElementById('userName').value = '';
-                document.getElementById('userComment').value = '';
-                alert("نظر شما با موفقیت ثبت شد. با تشکر!");
-                loadReviews(); // Reload list
+                if (response.ok) {
+                    document.getElementById('userName').value = '';
+                    document.getElementById('userComment').value = '';
+                    alert("نظر شما با موفقیت ثبت شد و برای مدیر ارسال گردید. با تشکر!");
+                } else {
+                    throw new Error('Network response was not ok');
+                }
             } catch (error) {
-                console.error("Error adding review: ", error);
-                alert("خطا در ثبت نظر. لطفاً دوباره تلاش کنید.");
+                console.error("Error sending review: ", error);
+                alert("خطا در ثبت نظر. لطفاً اینترنت خود را بررسی کنید.");
             } finally {
                 btn.innerText = "ثبت نظر و امتیاز";
                 btn.disabled = false;
             }
         });
-
-        // Load reviews on startup
-        loadReviews();
     </script>
 </body>
-    </html>
+                                                                                                          </html>
